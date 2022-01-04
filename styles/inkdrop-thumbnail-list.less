@@ -1,0 +1,34 @@
+.thumbnail-note-list-item-view.note-list-item-view.has-thumbnail {
+  //background-color: rgb(210, 255, 255);
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax( 0, 1fr ) 80px;
+
+  .content {
+    //background-color: rgb(238, 255, 213);
+    width: 100%;
+  }
+  .thumbnail {
+    //background-color: rgb(255, 209, 209);
+    flex-basis: 200px;
+    margin-top: 8px;
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+
+    .wrapper {
+      background-color: #fff;
+      width: 100%;
+      height: 72px;
+      position: relative;
+
+      .image {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        object-fit: cover;
+      }
+    }
+  }
+}
