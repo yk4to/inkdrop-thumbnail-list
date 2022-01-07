@@ -36,9 +36,11 @@ export default function ThumbnailNoteListItemView(props) {
   const htmlBody = marked(body)
   const doc = parser.parseFromString(htmlBody, 'text/html');
   const doms = doc.getElementsByTagName('img')
+  //const match = body.match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/)
   let imageUrl;
   if (doms && doms.length > 0) {
-    imageUrl = doms[0].src
+    //ref: https://forum.inkdrop.app/t/image-thumbnails-in-sidebar/2434/9
+    imageUrl = doms[0].src.replace(/^inkdrop:\/\/file:/,'inkdrop-file://file:')
   }
   //console.log(doc)
   //console.log(doms)
