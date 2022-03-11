@@ -2,9 +2,9 @@
   "name": "thumbnail-list",
   "main": "./src/index",
   "version": "1.0.0",
-  "description": "A short description of your package",
+  "description": "Show thumbnail images in note lists",
   "keywords": [],
-  "repository": "https://github.com/Luke-1220/inkdrop-thumbnail-list",
+  "repository": "https://github.com/Fus1onDev/inkdrop-thumbnail-list",
   "license": "MIT",
   "engines": {
     "inkdrop": "^5.x"
@@ -12,6 +12,8 @@
   "dependencies": {
     "classnames": "^2.3.1",
     "dayjs": "^1.10.7",
+    "gray-matter": "^4.0.3",
+    "markdown-wasm": "^1.2.0",
     "marked": "^4.0.8",
     "remove-markdown": "^0.3.0"
   }

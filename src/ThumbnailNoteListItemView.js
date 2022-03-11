@@ -4,12 +4,10 @@ import { useCallback } from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import classNames from 'classnames'
-import { marked } from 'marked'
 import removeMd from 'remove-markdown'
+const matter = require('gray-matter')
 
 dayjs.extend(relativeTime)
-
-const parser = new DOMParser();
 
 export default function ThumbnailNoteListItemView(props) {
   const NoteStatusIcon = inkdrop.components.getComponentClass('NoteStatusIcon')
@@ -32,25 +30,25 @@ export default function ThumbnailNoteListItemView(props) {
     tags,
     body
   } = note
-  const plainBody = removeMd(body)
-  const htmlBody = marked(body)
-  const doc = parser.parseFromString(htmlBody, 'text/html');
-  const doms = doc.getElementsByTagName('img')
-  //const match = body.match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/)
-  let imageUrl;
-  if (doms && doms.length > 0) {
-    //ref: https://forum.inkdrop.app/t/image-thumbnails-in-sidebar/2434/9
-    imageUrl = doms[0].src.replace(/^inkdrop:\/\/file:/,'inkdrop-file://file:')
+
+  const {content, data} = matter(body)
+  const plainBody = removeMd(content)
+
+  const match = body.match(/.*<img .*src="(.*[^\"])".*>.*|\!\[.*]\( *([^ ]+) *(?:[ ]+"[^"]*")?\)/)
+  
+  let imageUrl = data["thumbnail"]
+
+  if (!imageUrl && match && match.length > 2) {
+    const url = match[1] ?? match[2]
+    imageUrl = url.replace(/^inkdrop:\/\/file:/,'inkdrop-file://file:')
   }
-  //console.log(doc)
-  //console.log(doms)
-  //console.log(imageUrl)
+
   const ThumbnailView = () => {
     if (imageUrl) {
       return (
         <div className="thumbnail">
           <div className="wrapper">
-            <img className="image" src={imageUrl}/>
+            <img  className="image" src={imageUrl} />
           </div>
         </div>
       )
