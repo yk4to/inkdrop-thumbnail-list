@@ -1,7 +1,7 @@
 {
   "name": "thumbnail-list",
   "main": "./src/index",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Show thumbnail images in note lists",
   "keywords": [],
   "repository": "https://github.com/Fus1onDev/inkdrop-thumbnail-list",
@@ -13,8 +13,6 @@
     "classnames": "^2.3.1",
     "dayjs": "^1.10.7",
     "gray-matter": "^4.0.3",
-    "markdown-wasm": "^1.2.0",
-    "marked": "^4.0.8",
     "remove-markdown": "^0.3.0"
   }
 }

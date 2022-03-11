@@ -36,7 +36,7 @@ export default function ThumbnailNoteListItemView(props) {
 
   const match = body.match(/.*<img .*src="(.*[^\"])".*>.*|\!\[.*]\( *([^ ]+) *(?:[ ]+"[^"]*")?\)/)
   
-  let imageUrl = data["thumbnail"]
+  let imageUrl = data[inkdrop.config.get('thumbnail-list.keyName') ?? "thumbnail"]
 
   if (!imageUrl && match && match.length > 2) {
     const url = match[1] ?? match[2]
