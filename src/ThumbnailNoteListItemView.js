@@ -34,7 +34,8 @@ export default function ThumbnailNoteListItemView(props) {
   const {content, data} = matter(body)
   const plainBody = removeMd(content)
 
-  const match = body.match(/.*<img .*src="(.*[^\"])".*>.*|\!\[.*]\( *([^ ]+) *(?:[ ]+"[^"]*")?\)/)
+  // const match = body.match(/.*<img .*src="(.*[^\"])".*>.*|\!\[.*]\( *([^ ]+) *(?:[ ]+"[^"]*")?\)/)
+  const match = body.match(/!\[[^\]]*\]\((?<filename>.*?)(?=\"|\))(?<optionalpart>\".*\")?\)/)
   
   let imageUrl = data[inkdrop.config.get('thumbnail-list.keyName') ?? "thumbnail"]
 
@@ -117,7 +118,7 @@ export default function ThumbnailNoteListItemView(props) {
             )}
             <TagList tagIds={tags} />
           </div>
-          <span className="text">{plainBody}</span>
+          {/* <span className="text">{plainBody}</span> */}
         </div>
       </div>
       {ThumbnailView()}
