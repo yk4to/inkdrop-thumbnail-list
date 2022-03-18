@@ -4,7 +4,7 @@
 
 ![](https://inkdrop-plugin-badge.vercel.app/api/version/thumbnail-list) ![](https://inkdrop-plugin-badge.vercel.app/api/downloads/thumbnail-list) ![](https://img.shields.io/github/license/Fus1onDev/inkdrop-thumbnail-list?style=plastic)
 
-![](https://jmp.sh/HS0BLOh+/Screen+Shot+2022-03-18+at+2.28.08+pm.png)
+![](./images/example.png)
 
 This plugin automatically sets the first image as the thumbnail.
 
