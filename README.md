@@ -13,3 +13,12 @@ You can overwrite it by adding a `thumbnail` key to the front-matter.
 ![](./images/example.png)
 
 The name of the key (default: `thumbnail`) can be changed from settings.
+
+## Changelog
+
+### 0.2.0
+
+- Added some options
+- Removed one dependency
+
+### 0.1.0 - First Release

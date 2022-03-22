@@ -4,7 +4,6 @@ import { useCallback } from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import classNames from 'classnames'
-import removeMd from 'remove-markdown'
 const matter = require('gray-matter')
 
 dayjs.extend(relativeTime)
@@ -18,6 +17,7 @@ export default function ThumbnailNoteListItemView(props) {
     'TaskProgressView'
   )
   const TagList = inkdrop.components.getComponentClass('TagList')
+  const NoteListItemSummaryView = inkdrop.components.getComponentClass('NoteListItemSummaryView')
 
   const { active, focused, note, onClick, onDblClick, onContextMenu } = props
   const {
@@ -28,11 +28,11 @@ export default function ThumbnailNoteListItemView(props) {
     numOfTasks,
     numOfCheckedTasks,
     tags,
-    body
+    body,
+    _rev
   } = note
 
-  const {content, data} = matter(body)
-  const plainBody = removeMd(content)
+  const {data} = matter(body)
 
   const match = body.match(/.*<img .*src="(.*[^\"])".*>.*|\!\[.*]\( *([^ ]+) *(?:[ ]+"[^"]*")?\)/)
   
@@ -43,12 +43,16 @@ export default function ThumbnailNoteListItemView(props) {
     imageUrl = url.replace(/^inkdrop:\/\/file:/,'inkdrop-file://file:')
   }
 
+  const imageStyle = inkdrop.config.get('thumbnail-list.imageStyle')
+
+  const showSummary = inkdrop.config.get('thumbnail-list.showSummary')
+
   const ThumbnailView = () => {
     if (imageUrl) {
       return (
         <div className="thumbnail">
           <div className="wrapper">
-            <img  className="image" src={imageUrl} />
+            <img  className={`image ${imageStyle}`} src={imageUrl} />
           </div>
         </div>
       )
@@ -117,7 +121,7 @@ export default function ThumbnailNoteListItemView(props) {
             )}
             <TagList tagIds={tags} />
           </div>
-          <span className="text">{plainBody}</span>
+            {showSummary && <NoteListItemSummaryView revId={_rev || ''} body={body} />}
         </div>
       </div>
       {ThumbnailView()}

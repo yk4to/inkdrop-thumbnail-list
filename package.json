@@ -12,7 +12,6 @@
   "dependencies": {
     "classnames": "^2.3.1",
     "dayjs": "^1.10.7",
-    "gray-matter": "^4.0.3",
-    "remove-markdown": "^0.3.0"
+    "gray-matter": "^4.0.3"
   }
 }
