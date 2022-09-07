@@ -16,6 +16,10 @@ The name of the key (default: `thumbnail`) can be changed from settings.
 
 ## Changelog
 
+### 0.2.2
+
+- Changed to get dependencies from npm
+
 ### 0.2.1
 
 - Fixed a bug that caused a crash if duplicate keys existed in front-matter
