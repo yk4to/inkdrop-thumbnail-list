@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import classNames from 'classnames'
-const matter = require('gray-matter')
+const matter = require('white-matter')
 
 dayjs.extend(relativeTime)
 
@@ -36,7 +36,11 @@ export default function ThumbnailNoteListItemView(props) {
 
   const match = body.match(/.*<img .*src="(.*[^\"])".*>.*|\!\[.*]\( *([^ ]+) *(?:[ ]+"[^"]*")?\)/)
   
-  let imageUrl = data[inkdrop.config.get('thumbnail-list.keyName') ?? "thumbnail"]
+  let imageUrl = ''
+  let thumbnailKey = inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
+  if (data && thumbnailKey in data) {
+    imageUrl = data[thumbnailKey]
+  }
 
   if (!imageUrl && match && match.length > 2) {
     const url = match[1] ?? match[2]
