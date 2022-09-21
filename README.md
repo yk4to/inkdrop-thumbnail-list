@@ -16,6 +16,10 @@ The name of the key (default: `thumbnail`) can be changed from settings.
 
 ## Changelog
 
+### 0.2.3
+
+- Fixed a bug that non-YAML formatted text in the front matter cause a crash
+
 ### 0.2.2
 
 - Changed to get dependencies from npm
