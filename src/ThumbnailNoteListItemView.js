@@ -38,7 +38,7 @@ export default function ThumbnailNoteListItemView(props) {
   
   let imageUrl = ''
   let thumbnailKey = inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
-  if (data && thumbnailKey in data) {
+  if (data && (data[thumbnailKey] !== undefined)) {
     imageUrl = data[thumbnailKey]
   }
 
