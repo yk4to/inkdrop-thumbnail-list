@@ -1,7 +1,7 @@
 'use babel'
 import * as React from 'react'
 import { useCallback } from 'react'
-import dayjs from 'dayjs'
+const dayjs = require('dayjs')
 import relativeTime from 'dayjs/plugin/relativeTime'
 import classNames from 'classnames'
 const matter = require('white-matter')

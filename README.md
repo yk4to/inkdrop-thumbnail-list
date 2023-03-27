@@ -16,21 +16,25 @@ The name of the key (default: `thumbnail`) can be changed from settings.
 
 ## Changelog
 
+### 0.2.4
+
+- Use `require` instead of `default export` for dayjs
+
 ### 0.2.3
 
-- Fixed a bug that non-YAML formatted text in the front matter cause a crash
+- Fix a bug that non-YAML formatted text in the front matter cause a crash
 
 ### 0.2.2
 
-- Changed to get dependencies from npm
+- Change to get dependencies from npm
 
 ### 0.2.1
 
-- Fixed a bug that caused a crash if duplicate keys existed in front-matter
+- Fix a bug that caused a crash if duplicate keys existed in front-matter
 
 ### 0.2.0
 
-- Added some options
-- Removed one dependency
+- Add some options
+- Remove one dependency
 
 ### 0.1.0 - First Release
