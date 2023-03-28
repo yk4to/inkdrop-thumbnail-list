@@ -68,7 +68,7 @@ export default function ThumbnailNoteListItemView(props) {
     active,
     focused,
     task: status !== 'none',
-    'has-thumbnail': imageUrl !== undefined,
+    'has-thumbnail': !!imageUrl,
   })
   const date = dayjs(updatedAt).fromNow(true)
   const taskState = status ? `task-${status}` : ''

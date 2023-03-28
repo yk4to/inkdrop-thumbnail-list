@@ -16,6 +16,10 @@ The name of the key (default: `thumbnail`) can be changed from settings.
 
 ## Changelog
 
+### 0.2.5
+
+- Fix a bug that there are extra margins on items without thumbnails
+
 ### 0.2.4
 
 - Use `require` instead of `default export` for dayjs
