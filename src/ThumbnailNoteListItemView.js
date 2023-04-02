@@ -5,6 +5,7 @@ const dayjs = require('dayjs')
 import relativeTime from 'dayjs/plugin/relativeTime'
 import classNames from 'classnames'
 const matter = require('white-matter')
+import { extractImgUrl } from 'extract-img-url'
 
 dayjs.extend(relativeTime)
 
@@ -32,19 +33,13 @@ export default function ThumbnailNoteListItemView(props) {
     _rev
   } = note
 
-  const {data} = matter(body)
-
-  const match = body.match(/.*<img .*src="(.*[^\"])".*>.*|\!\[.*]\( *([^ ]+) *(?:[ ]+"[^"]*")?\)/)
+  const { data } = matter(body)
   
-  let imageUrl = ''
-  let thumbnailKey = inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
+  let imageUrl = extractImgUrl(body)?.replace(/^inkdrop:\/\/file:/,'inkdrop-file://file:')
+
+  const thumbnailKey = inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
   if (data && (data[thumbnailKey] !== undefined)) {
     imageUrl = data[thumbnailKey]
-  }
-
-  if (!imageUrl && match && match.length > 2) {
-    const url = match[1] ?? match[2]
-    imageUrl = url.replace(/^inkdrop:\/\/file:/,'inkdrop-file://file:')
   }
 
   const imageStyle = inkdrop.config.get('thumbnail-list.imageStyle')

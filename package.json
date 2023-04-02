@@ -12,6 +12,7 @@
   "dependencies": {
     "classnames": "^2.3.1",
     "dayjs": "^1.10.7",
+    "extract-img-url": "^0.1.1",
     "white-matter": "^0.1.0"
   }
 }

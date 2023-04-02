@@ -16,6 +16,10 @@ The name of the key (default: `thumbnail`) can be changed from settings.
 
 ## Changelog
 
+### 0.2.6
+
+- Split the URL extraction process into a separate package which uses better regex
+
 ### 0.2.5
 
 - Fix a bug that there are extra margins on items without thumbnails
