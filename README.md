@@ -16,6 +16,10 @@ The name of the key (default: `thumbnail`) can be changed from settings.
 
 ## Changelog
 
+### 0.3.0
+
+- Update dependencies and speed up thumbnail extraction process
+
 ### 0.2.6
 
 - Split the URL extraction process into a separate package which uses better regex

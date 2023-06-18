@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 const dayjs = require('dayjs')
 import relativeTime from 'dayjs/plugin/relativeTime'
 import classNames from 'classnames'
-const matter = require('white-matter')
+import matter from 'white-matter'
 import { extractImgUrl } from 'extract-img-url'
 
 dayjs.extend(relativeTime)
@@ -34,7 +34,7 @@ export default function ThumbnailNoteListItemView(props) {
   } = note
 
   const { data } = matter(body)
-  
+
   let imageUrl = extractImgUrl(body)?.replace(/^inkdrop:\/\/file:/,'inkdrop-file://file:')
 
   const thumbnailKey = inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
