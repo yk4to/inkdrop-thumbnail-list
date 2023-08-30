@@ -15,8 +15,8 @@
     "lint": "npx prettier --write 'src/**/*.js' && eslint --fix --ext .js src"
   },
   "dependencies": {
-    "classnames": "^2.3.1",
-    "dayjs": "^1.10.7",
+    "classnames": "^2.3.2",
+    "dayjs": "^1.11.9",
     "extract-img-url": "^0.1.2",
     "white-matter": "^0.3.0"
   },
