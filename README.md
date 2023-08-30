@@ -2,19 +2,27 @@
 
 > Inkdrop plugin to show thumbnail images in note lists
 
-![](https://inkdrop-plugin-badge.vercel.app/api/version/thumbnail-list) ![](https://inkdrop-plugin-badge.vercel.app/api/downloads/thumbnail-list) ![](https://img.shields.io/github/license/Fus1onDev/inkdrop-thumbnail-list?style=plastic)
+![](https://inkdrop-plugin-badge.vercel.app/api/version/thumbnail-list) ![](https://inkdrop-plugin-badge.vercel.app/api/downloads/thumbnail-list) ![](https://img.shields.io/github/license/fus1ondev/inkdrop-thumbnail-list?style=plastic)
 
 ![](./images/ss.png)
 
-This plugin automatically sets the first image as the thumbnail.
+This plugin shows thumbnails in your note list.
 
-You can overwrite it by adding a `thumbnail` key to the front-matter.
+Basically, it gets the first image of each note, but you can override this by setting a `thumbnail` key in the front-matter.
 
 ![](./images/example.png)
 
-The name of the key (default: `thumbnail`) can be changed from settings.
+You can also change the name of the key (default: `thumbnail`) from the settings.
 
 ## Changelog
+
+### 0.4.0
+
+- Fix a bug that context menu is not displayed in v5.6.0
+- Support Middle mouse click
+- Add missing indications (pin, conflict icons, and absolute datetime for older notes)
+- Add `Background Color` option
+- Update dependencies
 
 ### 0.3.0
 
