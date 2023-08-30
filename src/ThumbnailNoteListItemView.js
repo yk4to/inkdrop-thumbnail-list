@@ -91,7 +91,6 @@ export default function ThumbnailNoteListItemView(props) {
     e => {
       onContextMenu && onContextMenu(e, note)
       e.preventDefault()
-      e.stopPropagation()
     },
     [onContextMenu, note]
   )
