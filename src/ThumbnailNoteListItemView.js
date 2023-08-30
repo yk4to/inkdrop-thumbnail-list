@@ -1,4 +1,3 @@
-'use babel'
 import React, { useCallback } from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -14,13 +13,22 @@ export default function ThumbnailNoteListItemView(props) {
   const NoteListItemShareStatusView = inkdrop.components.getComponentClass(
     'NoteListItemShareStatusView'
   )
-  const TaskProgressView = inkdrop.components.getComponentClass(
-    'TaskProgressView'
-  )
+  const TaskProgressView =
+    inkdrop.components.getComponentClass('TaskProgressView')
   const TagList = inkdrop.components.getComponentClass('TagList')
-  const NoteListItemSummaryView = inkdrop.components.getComponentClass('NoteListItemSummaryView')
+  const NoteListItemSummaryView = inkdrop.components.getComponentClass(
+    'NoteListItemSummaryView'
+  )
 
-  const { active, focused, note, onClick, onDblClick, onContextMenu, onMiddleClick } = props
+  const {
+    active,
+    focused,
+    note,
+    onClick,
+    onDblClick,
+    onContextMenu,
+    onMiddleClick
+  } = props
   const {
     title,
     status,
@@ -37,10 +45,14 @@ export default function ThumbnailNoteListItemView(props) {
 
   const { data } = matter(body)
 
-  let imageUrl = extractImgUrl(body)?.replace(/^inkdrop:\/\/file:/,'inkdrop-file://file:')
+  let imageUrl = extractImgUrl(body)?.replace(
+    /^inkdrop:\/\/file:/,
+    'inkdrop-file://file:'
+  )
 
-  const thumbnailKey = inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
-  if (data && (data[thumbnailKey] !== undefined)) {
+  const thumbnailKey =
+    inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
+  if (data && data[thumbnailKey] !== undefined) {
     imageUrl = data[thumbnailKey]
   }
 
@@ -53,7 +65,7 @@ export default function ThumbnailNoteListItemView(props) {
       return (
         <div className="thumbnail">
           <div className="wrapper">
-            <img  className={`image ${imageStyle}`} src={imageUrl} />
+            <img className={`image ${imageStyle}`} src={imageUrl} />
           </div>
         </div>
       )
@@ -65,7 +77,7 @@ export default function ThumbnailNoteListItemView(props) {
     active,
     focused,
     task: status !== 'none',
-    'has-thumbnail': !!imageUrl,
+    'has-thumbnail': !!imageUrl
   })
   const fmt = dayjs(updatedAt)
   const date =
@@ -147,7 +159,9 @@ export default function ThumbnailNoteListItemView(props) {
             )}
             <TagList tagIds={tags} />
           </div>
-            {showSummary && <NoteListItemSummaryView revId={_rev || ''} body={body} />}
+          {showSummary && (
+            <NoteListItemSummaryView revId={_rev || ''} body={body} />
+          )}
         </div>
       </div>
       {ThumbnailView()}

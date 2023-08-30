@@ -1,6 +1,6 @@
 {
   "name": "thumbnail-list",
-  "main": "./src/index",
+  "main": "./lib/index.js",
   "version": "0.3.0",
   "description": "Show thumbnail images in note lists",
   "keywords": [],
@@ -9,10 +9,27 @@
   "engines": {
     "inkdrop": "^5.6.0"
   },
+  "scripts": {
+    "build": "babel src/ -d lib/ -s false",
+    "dev": "babel src/ -s -d lib/ --watch",
+    "lint": "npx prettier --write 'src/**/*.js' && eslint --fix --ext .js src"
+  },
   "dependencies": {
     "classnames": "^2.3.1",
     "dayjs": "^1.10.7",
     "extract-img-url": "^0.1.2",
     "white-matter": "^0.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.10",
+    "@babel/core": "^7.22.11",
+    "@babel/eslint-parser": "^7.22.11",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.5",
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "prettier": "^3.0.3"
   }
 }
