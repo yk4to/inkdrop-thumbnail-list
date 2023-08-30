@@ -21,6 +21,13 @@ module.exports = {
       description: '',
       type: 'boolean',
       default: true
+    },
+    bgColor: {
+      title: 'Background Color',
+      description:
+        'Thumbnail background color code (e.g. `#ffffff`, `transparent`)',
+      type: 'string',
+      default: '#ffffff'
     }
   },
 
