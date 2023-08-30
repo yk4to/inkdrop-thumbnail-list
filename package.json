@@ -7,7 +7,7 @@
   "repository": "https://github.com/fus1ondev/inkdrop-thumbnail-list",
   "license": "MIT",
   "engines": {
-    "inkdrop": "^5.x"
+    "inkdrop": "^5.6.0"
   },
   "dependencies": {
     "classnames": "^2.3.1",
