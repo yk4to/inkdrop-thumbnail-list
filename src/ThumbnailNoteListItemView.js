@@ -1,7 +1,6 @@
 'use babel'
-import * as React from 'react'
-import { useCallback } from 'react'
-const dayjs = require('dayjs')
+import React, { useCallback } from 'react'
+import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import classNames from 'classnames'
 import matter from 'white-matter'
@@ -20,7 +19,7 @@ export default function ThumbnailNoteListItemView(props) {
   const TagList = inkdrop.components.getComponentClass('TagList')
   const NoteListItemSummaryView = inkdrop.components.getComponentClass('NoteListItemSummaryView')
 
-  const { active, focused, note, onClick, onDblClick, onContextMenu } = props
+  const { active, focused, note, onClick, onDblClick, onContextMenu, onMiddleClick } = props
   const {
     title,
     status,
@@ -78,6 +77,17 @@ export default function ThumbnailNoteListItemView(props) {
     [onClick, note]
   )
 
+  const handleMouseDown = useCallback(
+    e => {
+      if (e.button === 1) {
+        onMiddleClick && onMiddleClick(e, note)
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    },
+    [onMiddleClick, note]
+  )
+
   const handleDblClick = useCallback(
     e => {
       onDblClick && onDblClick(e, note)
@@ -101,6 +111,7 @@ export default function ThumbnailNoteListItemView(props) {
       onClick={handleClick}
       onContextMenu={handleContextMenu}
       onDoubleClick={handleDblClick}
+      onMouseDown={handleMouseDown}
     >
       <div className="content">
         <div className="header">
