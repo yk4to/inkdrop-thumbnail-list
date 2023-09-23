@@ -19,7 +19,7 @@ You can also change the name of the key (default: `thumbnail`) from the settings
 ### 0.4.0
 
 - Fix a bug that context menu is not displayed in v5.6.0
-- Support Middle mouse click
+- Support middle mouse click
 - Add missing indications (pin, conflict icons, and absolute datetime for older notes)
 - Add `Background Color` option
 - Update dependencies
