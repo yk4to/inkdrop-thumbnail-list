@@ -10,7 +10,11 @@ This plugin shows thumbnails in your note list.
 
 Basically, it gets the first image of each note, but you can override this by setting a `thumbnail` key in the front-matter.
 
-![](./images/example.png)
+```yaml
+---
+thumbnail: https://example.com/imapge.png
+---
+```
 
 You can also change the name of the key (default: `thumbnail`) from the settings.
 
