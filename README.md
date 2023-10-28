@@ -12,7 +12,7 @@ Basically, it gets the first image of each note, but you can override this by se
 
 ```yaml
 ---
-thumbnail: https://example.com/imapge.png
+thumbnail: https://example.com/image.png
 ---
 ```
 
