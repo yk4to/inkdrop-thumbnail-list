@@ -45,6 +45,10 @@ export default function ThumbnailNoteListItemView(props) {
 
   const { data } = matter(body)
 
+  const showEmoji = inkdrop.config.get('thumbnail-list.showEmoji')
+  const emojiKey = inkdrop.config.get('thumbnail-list.emojiKeyName') ?? 'emoji'
+  const emoji = showEmoji ? data?.[emojiKey] : undefined
+
   let imageUrl = extractImgUrl(body)?.replace(
     /^inkdrop:\/\/file:/,
     'inkdrop-file://file:'
@@ -52,14 +56,12 @@ export default function ThumbnailNoteListItemView(props) {
 
   const thumbnailKey =
     inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
-  if (data && data[thumbnailKey] !== undefined) {
+  if (data?.[thumbnailKey] !== undefined) {
     imageUrl = data[thumbnailKey]
   }
 
   const imageStyle = inkdrop.config.get('thumbnail-list.imageStyle')
-
   const showSummary = inkdrop.config.get('thumbnail-list.showSummary')
-
   const bgColor = inkdrop.config.get('thumbnail-list.bgColor')
 
   const ThumbnailView = () => {
@@ -73,6 +75,7 @@ export default function ThumbnailNoteListItemView(props) {
       )
     }
   }
+
   const classes = classNames({
     'thumbnail-note-list-item-view': true,
     'note-list-item-view': true,
@@ -148,7 +151,7 @@ export default function ThumbnailNoteListItemView(props) {
           )}
           <NoteStatusIcon status={status} />
           <NoteListItemShareStatusView visibility={share} />
-          {title || 'Untitled'}
+          {(emoji ? `${emoji} ` : '') + (title || 'Untitled')}
         </div>
         <div className="description">
           <div className="meta">
