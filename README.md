@@ -58,7 +58,8 @@ You can also change the name of the key (default: `thumbnail`) from the settings
 
 ### 0.2.0
 
-- Add some options
-- Remove one dependency
+- Add `Show Summary` option (Thanks [@xmarkclx](https://github.com/xmarkclx))
+- Add `Image Style` option (Thanks [@xmarkclx](https://github.com/xmarkclx))
+- Use default summary view instead of `remove-markdown`
 
 ### 0.1.0 - First Release
