@@ -28,6 +28,18 @@ module.exports = {
         'Thumbnail background color code (e.g. `#ffffff`, `transparent`)',
       type: 'string',
       default: '#ffffff'
+    },
+    showEmoji: {
+      title: 'Show Emoji',
+      description: 'It Shows emoji set in the front-matter before the title.',
+      type: 'boolean',
+      default: false
+    },
+    emojiKeyName: {
+      title: 'Emoji Key Name',
+      description: "If 'Show Emoji' is enabled, it uses the value of this key.",
+      type: 'string',
+      default: 'emoji'
     }
   },
 
