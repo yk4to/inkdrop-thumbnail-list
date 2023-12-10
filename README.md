@@ -18,7 +18,17 @@ thumbnail: https://example.com/image.png
 
 You can also change the name of the key (default: `thumbnail`) from the settings.
 
+## Emoji support
+
+If `emoji` key is found in the front-matter, it is  shown before the title.
+
+![](./images/emoji.png)
+
 ## Changelog
+
+### 1.0.0
+
+- Add `Show Emoji` option
 
 ### 0.4.0
 
