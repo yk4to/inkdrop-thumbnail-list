@@ -1,7 +1,7 @@
 {
   "name": "thumbnail-list",
   "main": "./lib/index.js",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "Show thumbnail images in note lists",
   "keywords": [],
   "repository": "https://github.com/fus1ondev/inkdrop-thumbnail-list",
