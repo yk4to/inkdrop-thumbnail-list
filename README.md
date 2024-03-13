@@ -2,7 +2,7 @@
 
 > Inkdrop plugin to show thumbnail images in note lists
 
-![](https://inkdrop-plugin-badge.vercel.app/api/version/thumbnail-list) ![](https://inkdrop-plugin-badge.vercel.app/api/downloads/thumbnail-list) ![](https://img.shields.io/github/license/fus1ondev/inkdrop-thumbnail-list?style=plastic)
+![](https://inkdrop-plugin-badge.vercel.app/api/version/thumbnail-list) ![](https://inkdrop-plugin-badge.vercel.app/api/downloads/thumbnail-list) ![](https://img.shields.io/github/license/yk4to/inkdrop-thumbnail-list?style=plastic)
 
 ![](./images/ss.png)
 

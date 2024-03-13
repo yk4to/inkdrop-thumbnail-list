@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "description": "Show thumbnail images in note lists",
   "keywords": [],
-  "repository": "https://github.com/fus1ondev/inkdrop-thumbnail-list",
+  "repository": "https://github.com/yk4to/inkdrop-thumbnail-list",
   "license": "MIT",
   "engines": {
     "inkdrop": "^5.6.0"
