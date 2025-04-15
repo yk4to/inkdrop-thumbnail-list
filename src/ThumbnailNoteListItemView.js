@@ -52,7 +52,7 @@ export default function ThumbnailNoteListItemView(props) {
 
   let imageUrl = extractImgUrl(body)?.replace(
     /^inkdrop:\/\/file:/,
-    'inkdrop-file://file:'
+    'inkdrop-file://'
   )
 
   const thumbnailKey =
