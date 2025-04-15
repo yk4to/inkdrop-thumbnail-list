@@ -10,6 +10,8 @@ dayjs.extend(relativeTime)
 export default function ThumbnailNoteListItemView(props) {
   const StreamlineIcon = inkdrop.components.getComponentClass('StreamlineIcon')
   const NoteStatusIcon = inkdrop.components.getComponentClass('NoteStatusIcon')
+  const HighlightedText =
+    inkdrop.components.getComponentClass('HighlightedText')
   const NoteListItemShareStatusView = inkdrop.components.getComponentClass(
     'NoteListItemShareStatusView'
   )
@@ -21,6 +23,7 @@ export default function ThumbnailNoteListItemView(props) {
   )
 
   const {
+    listSortKey,
     active,
     focused,
     note,
@@ -31,18 +34,21 @@ export default function ThumbnailNoteListItemView(props) {
     onTagListItemClick
   } = props
   const {
-    title,
+    _rev,
+    title = 'Untitled',
+    body,
     status,
     updatedAt,
+    createdAt,
     share,
     numOfTasks,
     numOfCheckedTasks,
     tags,
     pinned,
-    _conflicts,
-    body,
-    _rev
+    _conflicts
   } = note
+
+  const ftsData = note._fts
 
   const { data } = matter(body)
 
@@ -85,7 +91,10 @@ export default function ThumbnailNoteListItemView(props) {
     task: status !== 'none',
     'has-thumbnail': !!imageUrl
   })
-  const fmt = dayjs(updatedAt)
+
+  const timestamp = listSortKey === 'createdAt' ? createdAt : updatedAt
+  const fmt = dayjs(timestamp)
+
   const date =
     updatedAt >= +new Date() - 1000 * 60 * 60 * 24 * 37
       ? fmt.fromNow(true)
@@ -151,7 +160,14 @@ export default function ThumbnailNoteListItemView(props) {
           )}
           <NoteStatusIcon status={status} />
           <NoteListItemShareStatusView visibility={share} />
-          {(emoji ? `${emoji} ` : '') + (title || 'Untitled')}
+          {emoji && `${emoji} `}
+          {ftsData ? (
+            <HighlightedText highlights={ftsData.titleHighlights}>
+              {title}
+            </HighlightedText>
+          ) : (
+            title
+          )}
         </div>
         <div className="description">
           <div className="meta">
@@ -165,7 +181,11 @@ export default function ThumbnailNoteListItemView(props) {
             <TagList tagIds={tags} onClickItem={onTagListItemClick} />
           </div>
           {showSummary && (
-            <NoteListItemSummaryView revId={_rev || ''} body={body} />
+            <NoteListItemSummaryView
+              revId={_rev || ''}
+              body={body}
+              highlights={ftsData?.bodyHighlights}
+            />
           )}
         </div>
       </div>
