@@ -7,7 +7,7 @@
   "repository": "https://github.com/yk4to/inkdrop-thumbnail-list",
   "license": "MIT",
   "engines": {
-    "inkdrop": "^5.11.2"
+    "inkdrop": "^5.11.2 || ^6.0.0"
   },
   "scripts": {
     "build": "babel -s false src/ -d lib/",
