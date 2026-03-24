@@ -26,6 +26,10 @@ If `emoji` key is found in the front-matter, it is  shown before the title.
 
 ## Changelog
 
+### 1.1.1
+
+- Support v6
+
 ### 1.1.0
 
 - Support highlighting matched keywords
