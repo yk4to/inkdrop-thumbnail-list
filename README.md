@@ -26,6 +26,11 @@ If `emoji` key is found in the front-matter, it is  shown before the title.
 
 ## Changelog
 
+### 1.1.2
+
+- Improve note list rendering performance by caching parsed front matter and extracted thumbnail URLs
+- Update dependencies
+
 ### 1.1.1
 
 - Support v6
