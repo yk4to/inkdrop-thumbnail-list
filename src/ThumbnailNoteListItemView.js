@@ -71,18 +71,6 @@ export default function ThumbnailNoteListItemView(props) {
   const showSummary = inkdrop.config.get('thumbnail-list.showSummary')
   const bgColor = inkdrop.config.get('thumbnail-list.bgColor')
 
-  const ThumbnailView = () => {
-    if (imageUrl) {
-      return (
-        <div className="thumbnail">
-          <div className="wrapper" style={{ backgroundColor: bgColor }}>
-            <img className={`image ${imageStyle}`} src={imageUrl} />
-          </div>
-        </div>
-      )
-    }
-  }
-
   const classes = classNames({
     'thumbnail-note-list-item-view': true,
     'note-list-item-view': true,
@@ -189,7 +177,13 @@ export default function ThumbnailNoteListItemView(props) {
           )}
         </div>
       </div>
-      {ThumbnailView()}
+      {imageUrl && (
+        <div className="thumbnail">
+          <div className="wrapper" style={{ backgroundColor: bgColor }}>
+            <img className={`image ${imageStyle}`} src={imageUrl} />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
