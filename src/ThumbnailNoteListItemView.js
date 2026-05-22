@@ -7,6 +7,40 @@ import { extractImgUrl } from 'extract-img-url'
 
 dayjs.extend(relativeTime)
 
+const NOTE_CONTENT_CACHE_LIMIT = 500
+const noteContentCache = new Map()
+
+function normalizeImageUrl(imageUrl) {
+  if (typeof imageUrl !== 'string') return imageUrl
+
+  return imageUrl.replace(/^inkdrop:\/\/file:/, 'inkdrop-file://')
+}
+
+function readNoteContent(note) {
+  const cacheKey = note?._rev ?? note?.body ?? ''
+  const cached = noteContentCache.get(cacheKey)
+  if (cached) {
+    noteContentCache.delete(cacheKey)
+    noteContentCache.set(cacheKey, cached)
+    return cached
+  }
+
+  const body = note?.body ?? ''
+  const { data } = matter(body)
+  const content = {
+    data,
+    imageUrl: normalizeImageUrl(extractImgUrl(body))
+  }
+
+  noteContentCache.set(cacheKey, content)
+  if (noteContentCache.size > NOTE_CONTENT_CACHE_LIMIT) {
+    const oldestKey = noteContentCache.keys().next().value
+    noteContentCache.delete(oldestKey)
+  }
+
+  return content
+}
+
 export default function ThumbnailNoteListItemView(props) {
   const StreamlineIcon = inkdrop.components.getComponentClass('StreamlineIcon')
   const NoteStatusIcon = inkdrop.components.getComponentClass('NoteStatusIcon')
@@ -50,16 +84,13 @@ export default function ThumbnailNoteListItemView(props) {
 
   const ftsData = note._fts
 
-  const { data } = matter(body)
+  const { data, imageUrl: extractedImageUrl } = readNoteContent(note)
 
   const showEmoji = inkdrop.config.get('thumbnail-list.showEmoji')
   const emojiKey = inkdrop.config.get('thumbnail-list.emojiKeyName') ?? 'emoji'
   const emoji = showEmoji ? data?.[emojiKey] : undefined
 
-  let imageUrl = extractImgUrl(body)?.replace(
-    /^inkdrop:\/\/file:/,
-    'inkdrop-file://'
-  )
+  let imageUrl = extractedImageUrl
 
   const thumbnailKey =
     inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
