@@ -24,6 +24,12 @@ If `emoji` key is found in the front-matter, it is shown before the title.
 
 ## Changelog
 
+### 1.2.0
+
+- Support template notes
+- Migrate the build toolchain to TypeScript, tsdown, oxlint, and pnpm
+- Drop Inkdrop v5 support
+
 ### 1.1.2
 
 - Improve note list rendering performance by caching parsed front matter and extracted thumbnail URLs
