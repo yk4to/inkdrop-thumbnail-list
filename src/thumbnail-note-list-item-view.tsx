@@ -1,23 +1,55 @@
-import React, { useCallback } from 'react'
+import classNames from 'classnames'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import classNames from 'classnames'
-import matter from 'white-matter'
 import { extractImgUrl } from 'extract-img-url'
+import type { Note } from 'inkdrop-model'
+import type React from 'react'
+import { useCallback } from 'react'
+import matter from 'white-matter'
 
 dayjs.extend(relativeTime)
 
 const NOTE_CONTENT_CACHE_LIMIT = 500
-const noteContentCache = new Map()
+const noteContentCache = new Map<string, NoteContent>()
 
-function normalizeImageUrl(imageUrl) {
-  if (typeof imageUrl !== 'string') return imageUrl
-
-  return imageUrl.replace(/^inkdrop:\/\/file:/, 'inkdrop-file://')
+interface HighlightMarkPosition {
+  offStart: number
+  offEnd: number
+  line: number
+  chStart: number
+  chEnd: number
 }
 
-function readNoteContent(note) {
-  const cacheKey = note?._rev ?? note?.body ?? ''
+interface NoteWithFtsData extends Note {
+  _fts?: {
+    titleHighlights: HighlightMarkPosition[]
+    bodyHighlights: HighlightMarkPosition[]
+  }
+}
+
+interface NoteContent {
+  data: Record<string, unknown>
+  imageUrl?: string
+}
+
+interface ThumbnailNoteListItemViewProps {
+  listSortKey: string
+  note: NoteWithFtsData
+  focused: boolean
+  active: boolean
+  onClick?: (e: React.MouseEvent, note: NoteWithFtsData) => void
+  onMiddleClick?: (e: React.MouseEvent, note: NoteWithFtsData) => void
+  onDblClick?: (e: React.MouseEvent, note: NoteWithFtsData) => void
+  onContextMenu?: (e: React.MouseEvent, note: NoteWithFtsData) => void
+  onTagListItemClick?: (e: React.MouseEvent, tagId: string) => void
+}
+
+function normalizeImageUrl(imageUrl: string | undefined) {
+  return imageUrl?.replace(/^inkdrop:\/\/file:/, 'inkdrop-file://')
+}
+
+function readNoteContent(note: NoteWithFtsData): NoteContent {
+  const cacheKey = note._rev ?? note.body ?? ''
   const cached = noteContentCache.get(cacheKey)
   if (cached) {
     noteContentCache.delete(cacheKey)
@@ -25,7 +57,7 @@ function readNoteContent(note) {
     return cached
   }
 
-  const body = note?.body ?? ''
+  const body = note.body ?? ''
   const { data } = matter(body)
   const content = {
     data,
@@ -35,26 +67,22 @@ function readNoteContent(note) {
   noteContentCache.set(cacheKey, content)
   if (noteContentCache.size > NOTE_CONTENT_CACHE_LIMIT) {
     const oldestKey = noteContentCache.keys().next().value
-    noteContentCache.delete(oldestKey)
+    if (oldestKey !== undefined) noteContentCache.delete(oldestKey)
   }
 
   return content
 }
 
-export default function ThumbnailNoteListItemView(props) {
-  const StreamlineIcon = inkdrop.components.getComponentClass('StreamlineIcon')
-  const NoteStatusIcon = inkdrop.components.getComponentClass('NoteStatusIcon')
-  const HighlightedText =
-    inkdrop.components.getComponentClass('HighlightedText')
+export default function ThumbnailNoteListItemView(props: ThumbnailNoteListItemViewProps) {
+  const StreamlineIcon = inkdrop.components.getComponentClass('StreamlineIcon')!
+  const NoteStatusIcon = inkdrop.components.getComponentClass('NoteStatusIcon')!
+  const HighlightedText = inkdrop.components.getComponentClass('HighlightedText')!
   const NoteListItemShareStatusView = inkdrop.components.getComponentClass(
     'NoteListItemShareStatusView'
-  )
-  const TaskProgressView =
-    inkdrop.components.getComponentClass('TaskProgressView')
-  const TagList = inkdrop.components.getComponentClass('TagList')
-  const NoteListItemSummaryView = inkdrop.components.getComponentClass(
-    'NoteListItemSummaryView'
-  )
+  )!
+  const TaskProgressView = inkdrop.components.getComponentClass('TaskProgressView')!
+  const TagList = inkdrop.components.getComponentClass('TagList')!
+  const NoteListItemSummaryView = inkdrop.components.getComponentClass('NoteListItemSummaryView')!
 
   const {
     listSortKey,
@@ -83,20 +111,17 @@ export default function ThumbnailNoteListItemView(props) {
   } = note
 
   const ftsData = note._fts
-
   const { data, imageUrl: extractedImageUrl } = readNoteContent(note)
 
   const showEmoji = inkdrop.config.get('thumbnail-list.showEmoji')
   const emojiKey = inkdrop.config.get('thumbnail-list.emojiKeyName') ?? 'emoji'
-  const emoji = showEmoji ? data?.[emojiKey] : undefined
+  const configuredEmoji = showEmoji ? data[String(emojiKey)] : undefined
+  const emoji = typeof configuredEmoji === 'string' ? configuredEmoji : undefined
 
   let imageUrl = extractedImageUrl
-
-  const thumbnailKey =
-    inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
-  if (data?.[thumbnailKey] !== undefined) {
-    imageUrl = data[thumbnailKey]
-  }
+  const thumbnailKey = inkdrop.config.get('thumbnail-list.keyName') ?? 'thumbnail'
+  const configuredThumbnail = data[String(thumbnailKey)]
+  if (typeof configuredThumbnail === 'string') imageUrl = configuredThumbnail
 
   const imageStyle = inkdrop.config.get('thumbnail-list.imageStyle')
   const showSummary = inkdrop.config.get('thumbnail-list.showSummary')
@@ -113,7 +138,6 @@ export default function ThumbnailNoteListItemView(props) {
 
   const timestamp = listSortKey === 'createdAt' ? createdAt : updatedAt
   const fmt = dayjs(timestamp)
-
   const date =
     updatedAt >= +new Date() - 1000 * 60 * 60 * 24 * 37
       ? fmt.fromNow(true)
@@ -122,8 +146,8 @@ export default function ThumbnailNoteListItemView(props) {
   const isTask = typeof numOfTasks === 'number' && numOfTasks > 0
 
   const handleClick = useCallback(
-    e => {
-      onClick && onClick(e, note)
+    (e: React.MouseEvent) => {
+      onClick?.(e, note)
       e.preventDefault()
       e.stopPropagation()
     },
@@ -131,9 +155,9 @@ export default function ThumbnailNoteListItemView(props) {
   )
 
   const handleMouseDown = useCallback(
-    e => {
+    (e: React.MouseEvent) => {
       if (e.button === 1) {
-        onMiddleClick && onMiddleClick(e, note)
+        onMiddleClick?.(e, note)
         e.preventDefault()
         e.stopPropagation()
       }
@@ -142,8 +166,8 @@ export default function ThumbnailNoteListItemView(props) {
   )
 
   const handleDblClick = useCallback(
-    e => {
-      onDblClick && onDblClick(e, note)
+    (e: React.MouseEvent) => {
+      onDblClick?.(e, note)
       e.preventDefault()
       e.stopPropagation()
     },
@@ -151,8 +175,8 @@ export default function ThumbnailNoteListItemView(props) {
   )
 
   const handleContextMenu = useCallback(
-    e => {
-      onContextMenu && onContextMenu(e, note)
+    (e: React.MouseEvent) => {
+      onContextMenu?.(e, note)
       e.preventDefault()
     },
     [onContextMenu, note]
@@ -169,21 +193,14 @@ export default function ThumbnailNoteListItemView(props) {
       <div className="content">
         <div className="header">
           {_conflicts && (
-            <StreamlineIcon
-              name="warning-bold"
-              className="note-conflicted-icon inline"
-            />
+            <StreamlineIcon name="warning-bold" className="note-conflicted-icon inline" />
           )}
-          {pinned && (
-            <StreamlineIcon name="pin-bold" className="note-pin-icon inline" />
-          )}
+          {pinned && <StreamlineIcon name="pin-bold" className="note-pin-icon inline" />}
           <NoteStatusIcon status={status} />
           <NoteListItemShareStatusView visibility={share} />
           {emoji && `${emoji} `}
           {ftsData ? (
-            <HighlightedText highlights={ftsData.titleHighlights}>
-              {title}
-            </HighlightedText>
+            <HighlightedText highlights={ftsData.titleHighlights}>{title}</HighlightedText>
           ) : (
             title
           )}
@@ -210,7 +227,7 @@ export default function ThumbnailNoteListItemView(props) {
       </div>
       {imageUrl && (
         <div className="thumbnail">
-          <div className="wrapper" style={{ backgroundColor: bgColor }}>
+          <div className="wrapper" style={{ backgroundColor: String(bgColor) }}>
             <img className={`image ${imageStyle}`} src={imageUrl} />
           </div>
         </div>
@@ -221,14 +238,14 @@ export default function ThumbnailNoteListItemView(props) {
 
 export function registerAsNoteListItemView() {
   inkdrop.components.registerClass(
-    ThumbnailNoteListItemView,
+    ThumbnailNoteListItemView as React.ComponentType,
     'CustomNoteListItemView'
   )
 }
 
 export function unregisterAsNoteListItemView() {
   inkdrop.components.deleteClass(
-    ThumbnailNoteListItemView.default,
+    ThumbnailNoteListItemView as React.ComponentType,
     'CustomNoteListItemView'
   )
 }

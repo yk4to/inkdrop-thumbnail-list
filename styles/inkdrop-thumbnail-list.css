@@ -1,7 +1,7 @@
 .thumbnail-note-list-item-view.note-list-item-view.has-thumbnail {
   display: grid;
   width: 100%;
-  grid-template-columns: minmax( 0, 1fr ) 80px;
+  grid-template-columns: minmax(0, 1fr) 80px;
 
   .content {
     width: 100%;
@@ -28,7 +28,7 @@
         &.cover {
           object-fit: cover;
         }
-  
+
         &.contain {
           object-fit: contain;
         }

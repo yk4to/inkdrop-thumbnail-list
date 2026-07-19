@@ -1,11 +1,15 @@
-import * as ThumbnailNoteListItemView from './ThumbnailNoteListItemView'
+import type { ConfigSchema, IInkdropPlugin } from '@inkdropapp/types'
 
-module.exports = {
-  config: {
+import {
+  registerAsNoteListItemView,
+  unregisterAsNoteListItemView
+} from './thumbnail-note-list-item-view'
+
+class ThumbnailListPlugin implements IInkdropPlugin {
+  config: Record<string, ConfigSchema> = {
     keyName: {
       title: 'Key Name',
-      description:
-        'You can overwrite thumbnail by adding this key to the front-matter.',
+      description: 'You can overwrite thumbnail by adding this key to the front-matter.',
       type: 'string',
       default: 'thumbnail'
     },
@@ -24,8 +28,7 @@ module.exports = {
     },
     bgColor: {
       title: 'Background Color',
-      description:
-        'Thumbnail background color code (e.g. `#ffffff`, `transparent`)',
+      description: 'Thumbnail background color code (e.g. `#ffffff`, `transparent`)',
       type: 'string',
       default: '#ffffff'
     },
@@ -41,13 +44,15 @@ module.exports = {
       type: 'string',
       default: 'emoji'
     }
-  },
+  }
 
-  activate: () => {
-    ThumbnailNoteListItemView.registerAsNoteListItemView()
-  },
+  activate() {
+    registerAsNoteListItemView()
+  }
 
-  deactivate: () => {
-    ThumbnailNoteListItemView.unregisterAsNoteListItemView()
+  deactivate() {
+    unregisterAsNoteListItemView()
   }
 }
+
+export default new ThumbnailListPlugin()

@@ -18,7 +18,7 @@ You can also change the name of the key (default: `thumbnail`) from the settings
 
 ## Emoji support
 
-If `emoji` key is found in the front-matter, it is  shown before the title.
+If `emoji` key is found in the front-matter, it is shown before the title.
 
 ![](./images/emoji.png)
 
