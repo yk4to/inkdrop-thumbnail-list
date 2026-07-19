@@ -2,13 +2,14 @@ import classNames from 'classnames'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { extractImgUrl } from 'extract-img-url'
-import type { Note } from 'inkdrop-model'
+import type { Note, TemplateBookId } from 'inkdrop-model'
 import type React from 'react'
 import { useCallback } from 'react'
 import matter from 'white-matter'
 
 dayjs.extend(relativeTime)
 
+const TEMPLATE_BOOK_ID: TemplateBookId = 'template'
 const NOTE_CONTENT_CACHE_LIMIT = 500
 const noteContentCache = new Map<string, NoteContent>()
 
@@ -99,6 +100,7 @@ export default function ThumbnailNoteListItemView(props: ThumbnailNoteListItemVi
     _rev,
     title = 'Untitled',
     body,
+    bookId,
     status,
     updatedAt,
     createdAt,
@@ -111,6 +113,7 @@ export default function ThumbnailNoteListItemView(props: ThumbnailNoteListItemVi
   } = note
 
   const ftsData = note._fts
+  const isTemplate = bookId === TEMPLATE_BOOK_ID
   const { data, imageUrl: extractedImageUrl } = readNoteContent(note)
 
   const showEmoji = inkdrop.config.get('thumbnail-list.showEmoji')
@@ -132,6 +135,8 @@ export default function ThumbnailNoteListItemView(props: ThumbnailNoteListItemVi
     'note-list-item-view': true,
     active,
     focused,
+    'is-template': isTemplate,
+    'is-official-template': isTemplate && !_rev,
     task: status !== 'none',
     'has-thumbnail': !!imageUrl
   })
@@ -207,7 +212,7 @@ export default function ThumbnailNoteListItemView(props: ThumbnailNoteListItemVi
         </div>
         <div className="description">
           <div className="meta">
-            <span className="date">{date}</span>
+            {!isTemplate && <span className="date">{date}</span>}
             {isTask && (
               <TaskProgressView
                 numOfTasks={numOfTasks || 0}
