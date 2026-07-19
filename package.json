@@ -28,6 +28,6 @@
     "white-matter": "^0.4.0"
   },
   "engines": {
-    "inkdrop": "^5.11.2 || ^6.0.0"
+    "inkdrop": "^6.0.0"
   }
 }
