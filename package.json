@@ -1,6 +1,6 @@
 {
   "name": "thumbnail-list",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Show thumbnail images in note lists",
   "keywords": [],
   "license": "MIT",
@@ -25,7 +25,7 @@
     "oxlint": "^1.74.0",
     "tsdown": "^0.22.8",
     "typescript": "^7.0.2",
-    "white-matter": "^0.4.0"
+    "white-matter": "^0.5.0"
   },
   "engines": {
     "inkdrop": "^6.0.0"

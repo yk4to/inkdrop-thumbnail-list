@@ -24,6 +24,11 @@ If `emoji` key is found in the front-matter, it is shown before the title.
 
 ## Changelog
 
+### 1.2.1
+
+- Fix a crash when reading notes without valid front matter
+- Update `white-matter` to 0.5.0
+
 ### 1.2.0
 
 - Support template notes
